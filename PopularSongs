@@ -1,0 +1,30 @@
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+import pandas as pd
+
+# Define user credentials to be used in the API call 
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=XXX,
+                                                           client_secret=XXX))
+
+# Generate df from API call 
+singer = input()#'Stay Homas'
+tracks = []
+popularity = []
+d={'Tracks':[],
+             'Popularity':[]}
+results = sp.search(q=singer, type = 'track', limit=50)
+for idx, track in enumerate(results['tracks']['items']):
+    for i in track['artists']:
+        if i['name'] == singer:
+     
+            d['Tracks'].append(track['name'])
+            d['Popularity'].append(track['popularity'])
+         
+        else:
+            pass
+        # Create df
+df = pd.DataFrame(d)
+
+# Sort and print df by popularity
+df.sort_values(by=['Popularity'], ascending = False)
+df.head(10)
