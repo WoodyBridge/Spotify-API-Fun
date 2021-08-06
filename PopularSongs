@@ -6,12 +6,13 @@ import pandas as pd
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=XXX,
                                                            client_secret=XXX))
 
-# Generate df from API call 
-singer = input()#'Stay Homas'
-tracks = []
-popularity = []
+# User inputs singer of interest
+singer = input()
+# Generate empty dictionary to populate
 d={'Tracks':[],
              'Popularity':[]}
+             
+# Make the API Call and iterate through the response to populate df
 results = sp.search(q=singer, type = 'track', limit=50)
 for idx, track in enumerate(results['tracks']['items']):
     for i in track['artists']:
